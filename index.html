@@ -5,21 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mariana & Victor 💖</title>
 
-<!-- Fonte romântica do Google Fonts -->
+<!-- Fonte elegante -->
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
 
 <style>
+    * {
+        box-sizing: border-box;
+    }
+
     body {
         margin: 0;
         padding: 0;
         height: 100vh;
+        width: 100vw;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         background: radial-gradient(circle at top left, #ffb6c1, #ff69b4, #ff1493);
         font-family: 'Poppins', sans-serif;
-        overflow: hidden;
+        overflow: hidden; /* Sem scroll */
         color: white;
         text-align: center;
         position: relative;
@@ -28,13 +33,14 @@
     /* Nomes no topo */
     .nomes {
         position: absolute;
-        top: 40px;
+        top: 25px;
         font-family: 'Great Vibes', cursive;
         font-size: 3.5em;
         color: #fffafc;
-        text-shadow: 0 0 10px rgba(255,255,255,0.6);
+        text-shadow: 0 0 15px rgba(255,255,255,0.6);
         letter-spacing: 2px;
         animation: fadeInDown 2s ease;
+        z-index: 3;
     }
 
     .nomes span {
@@ -42,14 +48,8 @@
     }
 
     @keyframes fadeInDown {
-        from {
-            opacity: 0;
-            transform: translateY(-30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        from { opacity: 0; transform: translateY(-30px); }
+        to { opacity: 1; transform: translateY(0); }
     }
 
     /* Caixa principal */
@@ -79,7 +79,7 @@
 
     .resumo {
         margin-top: 15px;
-        font-size: 1.1em;
+        font-size: 1.2em;
         color: #fff5d9;
     }
 
@@ -124,45 +124,50 @@
     }
 
     @keyframes float {
-        from {
-            transform: translateY(0) rotate(-45deg);
-            opacity: 1;
-        }
-        to {
-            transform: translateY(-800px) rotate(-45deg);
-            opacity: 0;
-        }
+        from { transform: translateY(0) rotate(-45deg); opacity: 1; }
+        to { transform: translateY(-800px) rotate(-45deg); opacity: 0; }
     }
 
-    /* Responsivo */
-    @media (max-width: 600px) {
-        .nomes {
-            font-size: 2.5em;
-            top: 20px;
-        }
-        .contador {
-            padding: 25px 20px;
-        }
-        h1 {
-            font-size: 1.6em;
-        }
-        p {
-            font-size: 1.1em;
-        }
+    /* Música escondida */
+    audio {
+        display: none;
+    }
+
+    /* Mensagem inicial para toque */
+    .play-hint {
+        position: absolute;
+        bottom: 20px;
+        font-size: 1em;
+        background: rgba(255,255,255,0.1);
+        padding: 8px 18px;
+        border-radius: 20px;
+        backdrop-filter: blur(5px);
+        color: #fff;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .play-hint:hover {
+        background: rgba(255,255,255,0.25);
     }
 </style>
 </head>
-<body>
 
-    <div class="nomes">
-        <span>Mariana</span> 💞 <span>Victor</span>
-    </div>
+<body>
+    <div class="nomes">Mariana <span>&</span> Victor</div>
 
     <div class="contador">
         <h1>💖 Nosso Amor 💖</h1>
         <p id="tempo">Carregando...</p>
         <p class="resumo" id="resumo">Carregando...</p>
     </div>
+
+    <div id="playHint" class="play-hint">💞 Toque para ouvir nossa música 💞</div>
+
+    <!-- Música de fundo (você pode trocar o link do src) -->
+    <audio id="bgMusic" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/10/13/audio_2e9ec07a0b.mp3?filename=romantic-background-music-ambient-love-story-124887.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
         const inicioNamoro = new Date(2025, 4, 31, 0, 0, 0);
@@ -177,40 +182,54 @@
             totalSegundos = Math.floor(totalSegundos / 60);
             const horas = totalSegundos % 24;
             const diasTotais = Math.floor(totalSegundos / 24);
-
             const meses = Math.floor(diasTotais / 30);
             const dias = diasTotais % 30;
 
             document.getElementById("tempo").innerHTML =
-                `<span class="unidade">${meses} meses</span>, 
-                <span class="unidade">${dias} dias</span>, 
-                <span class="unidade">${horas} horas</span>, 
-                <span class="unidade">${minutos} minutos</span> e 
-                <span class="unidade">${segundos} segundos</span>`;
+                `<span class="unidade">${meses} meses</span>, ` +
+                `<span class="unidade">${dias} dias</span>, ` +
+                `<span class="unidade">${horas} horas</span>, ` +
+                `<span class="unidade">${minutos} minutos</span> e ` +
+                `<span class="unidade">${segundos} segundos</span>`;
+
+            const totalHoras = diasTotais * 24 + horas;
+            const totalMinutos = totalHoras * 60 + minutos;
+            const totalSegundosTotal = totalMinutos * 60 + segundos;
 
             document.getElementById("resumo").innerHTML =
-                `<span class="unidade">${diasTotais} dias</span> juntos 💕`;
+                `<span class="unidade">${diasTotais} dias</span>, ` +
+                `<span class="unidade">${totalHoras} horas</span>, ` +
+                `<span class="unidade">${totalMinutos} minutos</span> e ` +
+                `<span class="unidade">${totalSegundosTotal} segundos</span>`;
         }
 
         setInterval(atualizarContador, 1000);
         atualizarContador();
 
-        // Corações aleatórios
+        // Corações flutuantes
         function criarCoracao() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
-            const size = 10 + Math.random() * 20;
-            heart.style.width = `${size}px`;
-            heart.style.height = `${size}px`;
+            const tamanho = 10 + Math.random() * 20;
+            heart.style.width = `${tamanho}px`;
+            heart.style.height = `${tamanho}px`;
             heart.style.left = Math.random() * window.innerWidth + 'px';
-            heart.style.animationDuration = 4 + Math.random() * 4 + 's';
-            heart.style.opacity = Math.random();
+            heart.style.animationDuration = 3 + Math.random() * 3 + 's';
             document.body.appendChild(heart);
-
-            setTimeout(() => heart.remove(), 8000);
+            setTimeout(() => heart.remove(), 6000);
         }
 
         setInterval(criarCoracao, 300);
+
+        // Música com toque
+        const music = document.getElementById("bgMusic");
+        const hint = document.getElementById("playHint");
+
+        hint.addEventListener("click", () => {
+            music.volume = 0.5;
+            music.play();
+            hint.style.display = "none";
+        });
     </script>
 </body>
 </html>
