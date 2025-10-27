@@ -2,7 +2,8 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Mariana & Victor 💖</title>
 
 <!-- Fonte elegante -->
@@ -11,23 +12,25 @@
 <style>
     * {
         box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
     }
 
-    body {
+    html, body {
         margin: 0;
         padding: 0;
-        height: 100vh;
-        width: 100vw;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        font-family: 'Poppins', sans-serif;
+        background: radial-gradient(circle at top left, #ffb6c1, #ff69b4, #ff1493);
+        color: white;
         display: flex;
-        flex-direction: column;
         justify-content: center;
         align-items: center;
-        background: radial-gradient(circle at top left, #ffb6c1, #ff69b4, #ff1493);
-        font-family: 'Poppins', sans-serif;
-        overflow: hidden; /* Sem scroll */
-        color: white;
+        flex-direction: column;
         text-align: center;
         position: relative;
+        touch-action: none;
     }
 
     /* Nomes no topo */
@@ -35,7 +38,7 @@
         position: absolute;
         top: 25px;
         font-family: 'Great Vibes', cursive;
-        font-size: 3.5em;
+        font-size: 3em;
         color: #fffafc;
         text-shadow: 0 0 15px rgba(255,255,255,0.6);
         letter-spacing: 2px;
@@ -56,30 +59,29 @@
     .contador {
         background: rgba(255, 255, 255, 0.15);
         backdrop-filter: blur(10px);
-        padding: 40px 60px;
+        padding: 30px 40px;
         border-radius: 25px;
         box-shadow: 0 0 30px rgba(255, 105, 180, 0.4);
-        text-align: center;
         max-width: 90%;
         z-index: 2;
     }
 
     h1 {
-        font-size: 2.2em;
-        margin-bottom: 15px;
+        font-size: 1.8em;
+        margin-bottom: 10px;
         animation: pulse 2s infinite ease-in-out;
         color: #ffe6f0;
         text-shadow: 0 0 10px rgba(255,255,255,0.5);
     }
 
     p {
-        font-size: 1.4em;
-        margin: 10px 0;
+        font-size: 1.2em;
+        margin: 5px 0;
     }
 
     .resumo {
-        margin-top: 15px;
-        font-size: 1.2em;
+        margin-top: 10px;
+        font-size: 1em;
         color: #fff5d9;
     }
 
@@ -133,14 +135,14 @@
         display: none;
     }
 
-    /* Mensagem inicial para toque */
+    /* Botão */
     .play-hint {
         position: absolute;
-        bottom: 20px;
+        bottom: 25px;
         font-size: 1em;
         background: rgba(255,255,255,0.1);
-        padding: 8px 18px;
-        border-radius: 20px;
+        padding: 10px 20px;
+        border-radius: 25px;
         backdrop-filter: blur(5px);
         color: #fff;
         cursor: pointer;
@@ -149,6 +151,7 @@
 
     .play-hint:hover {
         background: rgba(255,255,255,0.25);
+        transform: scale(1.05);
     }
 </style>
 </head>
@@ -164,9 +167,9 @@
 
     <div id="playHint" class="play-hint">💞 Toque para ouvir nossa música 💞</div>
 
-    <!-- Música de fundo (você pode trocar o link do src) -->
+    <!-- Música de fundo -->
     <audio id="bgMusic" loop>
-        <source src="https://cdn.pixabay.com/download/audio/2022/10/13/audio_2e9ec07a0b.mp3?filename=romantic-background-music-ambient-love-story-124887.mp3" type="audio/mpeg">
+        <source src="https://github.com/Victor69/Te-amo/blob/main/Velha%20Inf%C3%A2ncia%20(2004%20Digital%20Remaster)%5ByDuUgiEMe5Q%5D.mp3?raw=true" type="audio/mpeg">
     </audio>
 
     <script>
@@ -221,13 +224,13 @@
 
         setInterval(criarCoracao, 300);
 
-        // Música com toque
+        // Música
         const music = document.getElementById("bgMusic");
         const hint = document.getElementById("playHint");
 
         hint.addEventListener("click", () => {
             music.volume = 0.5;
-            music.play();
+            music.play().catch(() => {});
             hint.style.display = "none";
         });
     </script>
