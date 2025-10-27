@@ -2,144 +2,215 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Contador do Nosso Amor</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mariana & Victor 💖</title>
+
+<!-- Fonte romântica do Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+
 <style>
     body {
         margin: 0;
         padding: 0;
         height: 100vh;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
-        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-        font-family: 'Comic Sans MS', cursive, sans-serif;
+        background: radial-gradient(circle at top left, #ffb6c1, #ff69b4, #ff1493);
+        font-family: 'Poppins', sans-serif;
         overflow: hidden;
+        color: white;
+        text-align: center;
         position: relative;
     }
 
+    /* Nomes no topo */
+    .nomes {
+        position: absolute;
+        top: 40px;
+        font-family: 'Great Vibes', cursive;
+        font-size: 3.5em;
+        color: #fffafc;
+        text-shadow: 0 0 10px rgba(255,255,255,0.6);
+        letter-spacing: 2px;
+        animation: fadeInDown 2s ease;
+    }
+
+    .nomes span {
+        color: #ffe6f0;
+    }
+
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Caixa principal */
     .contador {
-        background: rgba(255,255,255,0.2);
-        padding: 50px;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        padding: 40px 60px;
         border-radius: 25px;
+        box-shadow: 0 0 30px rgba(255, 105, 180, 0.4);
         text-align: center;
-        box-shadow: 0 0 30px rgba(0,0,0,0.3);
-        color: #fff;
+        max-width: 90%;
+        z-index: 2;
     }
 
     h1 {
-        font-size: 3em;
-        margin-bottom: 20px;
-        animation: pulse 1.5s infinite;
+        font-size: 2.2em;
+        margin-bottom: 15px;
+        animation: pulse 2s infinite ease-in-out;
+        color: #ffe6f0;
+        text-shadow: 0 0 10px rgba(255,255,255,0.5);
     }
 
     p {
-        font-size: 1.7em;
+        font-size: 1.4em;
         margin: 10px 0;
     }
 
     .resumo {
-        font-size: 1.3em;
-        margin-top: 20px;
-        color: #fff0c0;
+        margin-top: 15px;
+        font-size: 1.1em;
+        color: #fff5d9;
     }
 
     .unidade {
         font-weight: bold;
-        color: #ffdddd;
+        color: #ffebf2;
     }
 
     @keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.1); }
-        100% { transform: scale(1); }
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
     }
 
     /* Corações flutuantes */
     .heart {
         position: absolute;
-        width: 20px;
-        height: 20px;
-        background: red;
+        background: rgba(255, 0, 76, 0.8);
         transform: rotate(-45deg);
-        animation: float 4s linear infinite;
-        opacity: 0.8;
+        animation: float linear infinite;
+        border-radius: 5px;
+        z-index: 0;
     }
 
     .heart::before,
     .heart::after {
         content: '';
         position: absolute;
-        width: 20px;
-        height: 20px;
-        background: red;
+        background: inherit;
         border-radius: 50%;
+        width: 100%;
+        height: 100%;
     }
 
-    .heart::before { top: -10px; left: 0; }
-    .heart::after { left: 10px; top: 0; }
+    .heart::before {
+        top: -50%;
+        left: 0;
+    }
+
+    .heart::after {
+        top: 0;
+        left: 50%;
+    }
 
     @keyframes float {
-        0% { transform: translateY(0) rotate(-45deg); opacity:0.8; }
-        100% { transform: translateY(-800px) rotate(-45deg); opacity:0; }
+        from {
+            transform: translateY(0) rotate(-45deg);
+            opacity: 1;
+        }
+        to {
+            transform: translateY(-800px) rotate(-45deg);
+            opacity: 0;
+        }
+    }
+
+    /* Responsivo */
+    @media (max-width: 600px) {
+        .nomes {
+            font-size: 2.5em;
+            top: 20px;
+        }
+        .contador {
+            padding: 25px 20px;
+        }
+        h1 {
+            font-size: 1.6em;
+        }
+        p {
+            font-size: 1.1em;
+        }
     }
 </style>
 </head>
 <body>
-<div class="contador">
-    <h1>💖 Nosso Amor 💖</h1>
-    <p id="tempo">Carregando...</p>
-    <p class="resumo" id="resumo">Carregando...</p>
-</div>
 
-<script>
-    const inicioNamoro = new Date(2025, 4, 31, 0, 0, 0);
+    <div class="nomes">
+        <span>Mariana</span> 💞 <span>Victor</span>
+    </div>
 
-    function atualizarContador() {
-        const agora = new Date();
-        let totalSegundos = Math.floor((agora - inicioNamoro) / 1000);
+    <div class="contador">
+        <h1>💖 Nosso Amor 💖</h1>
+        <p id="tempo">Carregando...</p>
+        <p class="resumo" id="resumo">Carregando...</p>
+    </div>
 
-        const segundos = totalSegundos % 60;
-        totalSegundos = Math.floor(totalSegundos / 60);
-        const minutos = totalSegundos % 60;
-        totalSegundos = Math.floor(totalSegundos / 60);
-        const horas = totalSegundos % 24;
-        const diasTotais = Math.floor(totalSegundos / 24);
+    <script>
+        const inicioNamoro = new Date(2025, 4, 31, 0, 0, 0);
 
-        const meses = Math.floor(diasTotais / 30);
-        const dias = diasTotais % 30;
+        function atualizarContador() {
+            const agora = new Date();
+            let totalSegundos = Math.floor((agora - inicioNamoro) / 1000);
 
-        document.getElementById("tempo").innerHTML =
-            `<span class="unidade">${meses} meses</span>, ` +
-            `<span class="unidade">${dias} dias</span>, ` +
-            `<span class="unidade">${horas} horas</span>, ` +
-            `<span class="unidade">${minutos} minutos</span> e ` +
-            `<span class="unidade">${segundos} segundos</span>`;
+            const segundos = totalSegundos % 60;
+            totalSegundos = Math.floor(totalSegundos / 60);
+            const minutos = totalSegundos % 60;
+            totalSegundos = Math.floor(totalSegundos / 60);
+            const horas = totalSegundos % 24;
+            const diasTotais = Math.floor(totalSegundos / 24);
 
-        document.getElementById("resumo").innerHTML =
-            `<span class="unidade">${diasTotais} dias</span>, ` +
-            `<span class="unidade">${diasTotais*24 + horas} horas</span>, ` +
-            `<span class="unidade">${diasTotais*24*60 + horas*60 + minutos} minutos</span> e ` +
-            `<span class="unidade">${diasTotais*24*3600 + horas*3600 + minutos*60 + segundos} segundos</span>`;
-    }
+            const meses = Math.floor(diasTotais / 30);
+            const dias = diasTotais % 30;
 
-    setInterval(atualizarContador, 1000);
-    atualizarContador();
+            document.getElementById("tempo").innerHTML =
+                `<span class="unidade">${meses} meses</span>, 
+                <span class="unidade">${dias} dias</span>, 
+                <span class="unidade">${horas} horas</span>, 
+                <span class="unidade">${minutos} minutos</span> e 
+                <span class="unidade">${segundos} segundos</span>`;
 
-    // Criar corações aleatórios
-    function criarCoracao() {
-        const heart = document.createElement('div');
-        heart.classList.add('heart');
-        heart.style.left = Math.random() * window.innerWidth + 'px';
-        heart.style.width = 10 + Math.random() * 20 + 'px';
-        heart.style.height = heart.style.width;
-        heart.style.animationDuration = 3 + Math.random() * 3 + 's';
-        document.body.appendChild(heart);
+            document.getElementById("resumo").innerHTML =
+                `<span class="unidade">${diasTotais} dias</span> juntos 💕`;
+        }
 
-        setTimeout(() => heart.remove(), 6000);
-    }
+        setInterval(atualizarContador, 1000);
+        atualizarContador();
 
-    setInterval(criarCoracao, 300);
-</script>
+        // Corações aleatórios
+        function criarCoracao() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            const size = 10 + Math.random() * 20;
+            heart.style.width = `${size}px`;
+            heart.style.height = `${size}px`;
+            heart.style.left = Math.random() * window.innerWidth + 'px';
+            heart.style.animationDuration = 4 + Math.random() * 4 + 's';
+            heart.style.opacity = Math.random();
+            document.body.appendChild(heart);
+
+            setTimeout(() => heart.remove(), 8000);
+        }
+
+        setInterval(criarCoracao, 300);
+    </script>
 </body>
 </html>
-
