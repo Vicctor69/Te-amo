@@ -10,16 +10,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
 
 <style>
-    * {
-        box-sizing: border-box;
-        -webkit-tap-highlight-color: transparent;
-    }
-
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     html, body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
+        margin: 0; padding: 0;
+        width: 100%; height: 100%;
         overflow: hidden;
         font-family: 'Poppins', sans-serif;
         background: radial-gradient(circle at top left, #ffb6c1, #ff69b4, #ff1493);
@@ -41,18 +35,10 @@
         color: #fffafc;
         text-shadow: 0 0 15px rgba(255,255,255,0.7);
         letter-spacing: 2px;
-        animation: fadeInDown 2s ease;
         z-index: 3;
     }
 
-    .nomes span {
-        color: #ffe6f0;
-    }
-
-    @keyframes fadeInDown {
-        from { opacity: 0; transform: translateY(-30px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
+    .nomes span { color: #ffe6f0; }
 
     .contador {
         background: rgba(255, 255, 255, 0.15);
@@ -86,10 +72,7 @@
         opacity: 0.9;
     }
 
-    .unidade {
-        font-weight: bold;
-        color: #fff;
-    }
+    .unidade { font-weight: bold; color: #fff; }
 
     @keyframes pulse {
         0%, 100% { transform: scale(1); }
@@ -125,30 +108,25 @@
 
     audio { display: none; }
 
-    /* Botão de volume */
     #volumeBtn {
-        position: absolute;
-        bottom: 25px;
-        right: 25px;
-        background: rgba(255,255,255,0.15);
-        border: none;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: rgba(255,255,255,0.2);
         color: white;
-        font-size: 1.5em;
-        padding: 10px;
+        border: none;
+        font-size: 1.6em;
         border-radius: 50%;
+        padding: 10px;
         backdrop-filter: blur(5px);
         cursor: pointer;
+        z-index: 10;
         transition: 0.3s;
-        z-index: 5;
     }
 
-    #volumeBtn:hover {
-        background: rgba(255,255,255,0.3);
-        transform: scale(1.1);
-    }
+    #volumeBtn:active { transform: scale(0.95); background: rgba(255,255,255,0.3); }
 
-    /* Dica inicial */
-    .play-hint {
+    #playHint {
         position: absolute;
         bottom: 80px;
         font-size: 1em;
@@ -158,26 +136,11 @@
         backdrop-filter: blur(6px);
         color: #fff;
         cursor: pointer;
-        transition: 0.3s;
-        animation: fadeInUp 2s ease;
-    }
-
-    .play-hint:hover {
-        background: rgba(255,255,255,0.25);
-        transform: scale(1.05);
-    }
-
-    @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
+        z-index: 5;
     }
 
     @media (max-width: 480px) {
-        .nomes {
-            font-size: 2.3em;
-            top: 25px;
-        }
-
+        .nomes { font-size: 2.3em; top: 25px; }
         h1 { font-size: 1.4em; }
         p { font-size: 1em; }
         #volumeBtn { font-size: 1.3em; bottom: 20px; right: 20px; }
@@ -194,85 +157,82 @@
         <p class="resumo" id="resumo">Carregando...</p>
     </div>
 
-    <div id="playHint" class="play-hint">💞 Toque para ouvir nossa música 💞</div>
+    <div id="playHint">💞 Toque para ouvir nossa música 💞</div>
+    <button id="volumeBtn">🔊</button>
 
-    <button id="volumeBtn" style="display:none;">🔊</button>
-
-    <!-- Música -->
     <audio id="bgMusic" loop>
         <source src="https://files.catbox.moe/gqq7yj.mp3" type="audio/mpeg">
     </audio>
 
-    <script>
-        const inicioNamoro = new Date(2025, 4, 31, 0, 0, 0);
+<script>
+const inicioNamoro = new Date(2025, 4, 31, 0, 0, 0);
 
-        function atualizarContador() {
-            const agora = new Date();
-            let totalSegundos = Math.floor((agora - inicioNamoro) / 1000);
+function atualizarContador() {
+    const agora = new Date();
+    let totalSegundos = Math.floor((agora - inicioNamoro) / 1000);
 
-            const segundos = totalSegundos % 60;
-            totalSegundos = Math.floor(totalSegundos / 60);
-            const minutos = totalSegundos % 60;
-            totalSegundos = Math.floor(totalSegundos / 60);
-            const horas = totalSegundos % 24;
-            const diasTotais = Math.floor(totalSegundos / 24);
-            const meses = Math.floor(diasTotais / 30);
-            const dias = diasTotais % 30;
+    const segundos = totalSegundos % 60;
+    totalSegundos = Math.floor(totalSegundos / 60);
+    const minutos = totalSegundos % 60;
+    totalSegundos = Math.floor(totalSegundos / 60);
+    const horas = totalSegundos % 24;
+    const diasTotais = Math.floor(totalSegundos / 24);
+    const meses = Math.floor(diasTotais / 30);
+    const dias = diasTotais % 30;
 
-            document.getElementById("tempo").innerHTML =
-                `<span class="unidade">${meses}</span> meses, ` +
-                `<span class="unidade">${dias}</span> dias, ` +
-                `<span class="unidade">${horas}</span> horas, ` +
-                `<span class="unidade">${minutos}</span> minutos e ` +
-                `<span class="unidade">${segundos}</span> segundos`;
+    document.getElementById("tempo").innerHTML =
+        `<span class="unidade">${meses}</span> meses, ` +
+        `<span class="unidade">${dias}</span> dias, ` +
+        `<span class="unidade">${horas}</span> horas, ` +
+        `<span class="unidade">${minutos}</span> minutos e ` +
+        `<span class="unidade">${segundos}</span> segundos`;
 
-            const totalHoras = diasTotais * 24 + horas;
-            const totalMinutos = totalHoras * 60 + minutos;
-            const totalSegundosTotal = totalMinutos * 60 + segundos;
+    const totalHoras = diasTotais * 24 + horas;
+    const totalMinutos = totalHoras * 60 + minutos;
+    const totalSegundosTotal = totalMinutos * 60 + segundos;
 
-            document.getElementById("resumo").innerHTML =
-                `ou <span class="unidade">${diasTotais}</span> dias, ` +
-                `<span class="unidade">${totalHoras}</span> horas, ` +
-                `<span class="unidade">${totalMinutos}</span> minutos e ` +
-                `<span class="unidade">${totalSegundosTotal}</span> segundos 💕`;
-        }
+    document.getElementById("resumo").innerHTML =
+        `ou <span class="unidade">${diasTotais}</span> dias, ` +
+        `<span class="unidade">${totalHoras}</span> horas, ` +
+        `<span class="unidade">${totalMinutos}</span> minutos e ` +
+        `<span class="unidade">${totalSegundosTotal}</span> segundos 💕`;
+}
 
-        setInterval(atualizarContador, 1000);
-        atualizarContador();
+setInterval(atualizarContador, 1000);
+atualizarContador();
 
-        function criarCoracao() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            const tamanho = 10 + Math.random() * 20;
-            heart.style.width = `${tamanho}px`;
-            heart.style.height = `${tamanho}px`;
-            heart.style.left = Math.random() * window.innerWidth + 'px';
-            heart.style.animationDuration = 3 + Math.random() * 3 + 's';
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 6000);
-        }
+// Corações animados
+function criarCoracao() {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    const tamanho = 10 + Math.random() * 20;
+    heart.style.width = `${tamanho}px`;
+    heart.style.height = `${tamanho}px`;
+    heart.style.left = Math.random() * window.innerWidth + 'px';
+    heart.style.animationDuration = 3 + Math.random() * 3 + 's';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+}
+setInterval(criarCoracao, 300);
 
-        setInterval(criarCoracao, 300);
+// Música e volume
+const music = document.getElementById("bgMusic");
+const hint = document.getElementById("playHint");
+const volumeBtn = document.getElementById("volumeBtn");
+let muted = false;
 
-        // Música e volume
-        const music = document.getElementById("bgMusic");
-        const hint = document.getElementById("playHint");
-        const volumeBtn = document.getElementById("volumeBtn");
-        let muted = false;
+hint.addEventListener("click", () => {
+    music.volume = 0.5;
+    music.play().catch(() => {});
+    hint.style.display = "none";
+});
 
-        hint.addEventListener("click", () => {
-            music.volume = 0.5;
-            music.play().then(() => {
-                hint.style.display = "none";
-                volumeBtn.style.display = "block";
-            }).catch(() => {});
-        });
-
-        volumeBtn.addEventListener("click", () => {
-            muted = !muted;
-            music.muted = muted;
-            volumeBtn.textContent = muted ? "🔇" : "🔊";
-        });
-    </script>
+// Botão de volume sempre visível
+volumeBtn.addEventListener("click", () => {
+    muted = !muted;
+    music.muted = muted;
+    volumeBtn.textContent = muted ? "🔇" : "🔊";
+});
+</script>
 </body>
 </html>
