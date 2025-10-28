@@ -6,7 +6,7 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Mariana & Victor 💖</title>
 
-<!-- Fontes elegantes -->
+<!-- Fontes -->
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
 
 <style>
@@ -125,9 +125,32 @@
 
     audio { display: none; }
 
+    /* Botão de volume */
+    #volumeBtn {
+        position: absolute;
+        bottom: 25px;
+        right: 25px;
+        background: rgba(255,255,255,0.15);
+        border: none;
+        color: white;
+        font-size: 1.5em;
+        padding: 10px;
+        border-radius: 50%;
+        backdrop-filter: blur(5px);
+        cursor: pointer;
+        transition: 0.3s;
+        z-index: 5;
+    }
+
+    #volumeBtn:hover {
+        background: rgba(255,255,255,0.3);
+        transform: scale(1.1);
+    }
+
+    /* Dica inicial */
     .play-hint {
         position: absolute;
-        bottom: 30px;
+        bottom: 80px;
         font-size: 1em;
         background: rgba(255,255,255,0.1);
         padding: 10px 20px;
@@ -136,11 +159,17 @@
         color: #fff;
         cursor: pointer;
         transition: 0.3s;
+        animation: fadeInUp 2s ease;
     }
 
     .play-hint:hover {
         background: rgba(255,255,255,0.25);
         transform: scale(1.05);
+    }
+
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
     }
 
     @media (max-width: 480px) {
@@ -149,18 +178,9 @@
             top: 25px;
         }
 
-        h1 {
-            font-size: 1.4em;
-        }
-
-        p {
-            font-size: 1em;
-        }
-
-        .play-hint {
-            font-size: 0.9em;
-            padding: 8px 16px;
-        }
+        h1 { font-size: 1.4em; }
+        p { font-size: 1em; }
+        #volumeBtn { font-size: 1.3em; bottom: 20px; right: 20px; }
     }
 </style>
 </head>
@@ -176,7 +196,9 @@
 
     <div id="playHint" class="play-hint">💞 Toque para ouvir nossa música 💞</div>
 
-    <!-- Música de fundo -->
+    <button id="volumeBtn" style="display:none;">🔊</button>
+
+    <!-- Música -->
     <audio id="bgMusic" loop>
         <source src="https://files.catbox.moe/gqq7yj.mp3" type="audio/mpeg">
     </audio>
@@ -197,7 +219,6 @@
             const meses = Math.floor(diasTotais / 30);
             const dias = diasTotais % 30;
 
-            // Linha principal (meses, dias, horas...)
             document.getElementById("tempo").innerHTML =
                 `<span class="unidade">${meses}</span> meses, ` +
                 `<span class="unidade">${dias}</span> dias, ` +
@@ -205,7 +226,6 @@
                 `<span class="unidade">${minutos}</span> minutos e ` +
                 `<span class="unidade">${segundos}</span> segundos`;
 
-            // Resumo com "ou ..."
             const totalHoras = diasTotais * 24 + horas;
             const totalMinutos = totalHoras * 60 + minutos;
             const totalSegundosTotal = totalMinutos * 60 + segundos;
@@ -220,7 +240,6 @@
         setInterval(atualizarContador, 1000);
         atualizarContador();
 
-        // Corações animados
         function criarCoracao() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
@@ -235,14 +254,24 @@
 
         setInterval(criarCoracao, 300);
 
-        // Música
+        // Música e volume
         const music = document.getElementById("bgMusic");
         const hint = document.getElementById("playHint");
+        const volumeBtn = document.getElementById("volumeBtn");
+        let muted = false;
 
         hint.addEventListener("click", () => {
             music.volume = 0.5;
-            music.play().catch(() => {});
-            hint.style.display = "none";
+            music.play().then(() => {
+                hint.style.display = "none";
+                volumeBtn.style.display = "block";
+            }).catch(() => {});
+        });
+
+        volumeBtn.addEventListener("click", () => {
+            muted = !muted;
+            music.muted = muted;
+            volumeBtn.textContent = muted ? "🔇" : "🔊";
         });
     </script>
 </body>
