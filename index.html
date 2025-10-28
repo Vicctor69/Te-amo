@@ -6,7 +6,7 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Mariana & Victor 💖</title>
 
-<!-- Fonte elegante -->
+<!-- Fontes elegantes -->
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
 
 <style>
@@ -33,14 +33,13 @@
         touch-action: none;
     }
 
-    /* Nomes no topo */
     .nomes {
         position: absolute;
-        top: 25px;
+        top: 30px;
         font-family: 'Great Vibes', cursive;
-        font-size: 3em;
+        font-size: 2.8em;
         color: #fffafc;
-        text-shadow: 0 0 15px rgba(255,255,255,0.6);
+        text-shadow: 0 0 15px rgba(255,255,255,0.7);
         letter-spacing: 2px;
         animation: fadeInDown 2s ease;
         z-index: 3;
@@ -55,39 +54,41 @@
         to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Caixa principal */
     .contador {
         background: rgba(255, 255, 255, 0.15);
-        backdrop-filter: blur(10px);
-        padding: 30px 40px;
+        backdrop-filter: blur(12px);
+        padding: 25px 30px;
         border-radius: 25px;
         box-shadow: 0 0 30px rgba(255, 105, 180, 0.4);
         max-width: 90%;
         z-index: 2;
+        margin: 20px;
     }
 
     h1 {
-        font-size: 1.8em;
-        margin-bottom: 10px;
+        font-size: 1.7em;
+        margin-bottom: 15px;
         animation: pulse 2s infinite ease-in-out;
         color: #ffe6f0;
         text-shadow: 0 0 10px rgba(255,255,255,0.5);
     }
 
     p {
-        font-size: 1.2em;
-        margin: 5px 0;
+        font-size: 1.1em;
+        margin: 8px 0;
+        line-height: 1.5em;
     }
 
     .resumo {
         margin-top: 10px;
         font-size: 1em;
         color: #fff5d9;
+        opacity: 0.9;
     }
 
     .unidade {
         font-weight: bold;
-        color: #ffebf2;
+        color: #fff;
     }
 
     @keyframes pulse {
@@ -95,7 +96,6 @@
         50% { transform: scale(1.05); }
     }
 
-    /* Corações flutuantes */
     .heart {
         position: absolute;
         background: rgba(255, 0, 76, 0.8);
@@ -115,35 +115,24 @@
         height: 100%;
     }
 
-    .heart::before {
-        top: -50%;
-        left: 0;
-    }
-
-    .heart::after {
-        top: 0;
-        left: 50%;
-    }
+    .heart::before { top: -50%; left: 0; }
+    .heart::after { top: 0; left: 50%; }
 
     @keyframes float {
         from { transform: translateY(0) rotate(-45deg); opacity: 1; }
         to { transform: translateY(-800px) rotate(-45deg); opacity: 0; }
     }
 
-    /* Música escondida */
-    audio {
-        display: none;
-    }
+    audio { display: none; }
 
-    /* Botão */
     .play-hint {
         position: absolute;
-        bottom: 25px;
+        bottom: 30px;
         font-size: 1em;
         background: rgba(255,255,255,0.1);
         padding: 10px 20px;
         border-radius: 25px;
-        backdrop-filter: blur(5px);
+        backdrop-filter: blur(6px);
         color: #fff;
         cursor: pointer;
         transition: 0.3s;
@@ -152,6 +141,26 @@
     .play-hint:hover {
         background: rgba(255,255,255,0.25);
         transform: scale(1.05);
+    }
+
+    @media (max-width: 480px) {
+        .nomes {
+            font-size: 2.3em;
+            top: 25px;
+        }
+
+        h1 {
+            font-size: 1.4em;
+        }
+
+        p {
+            font-size: 1em;
+        }
+
+        .play-hint {
+            font-size: 0.9em;
+            padding: 8px 16px;
+        }
     }
 </style>
 </head>
@@ -169,7 +178,7 @@
 
     <!-- Música de fundo -->
     <audio id="bgMusic" loop>
-        <source src="https://github.com/Victor69/Te-amo/blob/main/Velha%20Inf%C3%A2ncia%20(2004%20Digital%20Remaster)%5ByDuUgiEMe5Q%5D.mp3?raw=true" type="audio/mpeg">
+        <source src="https://files.catbox.moe/gqq7yj.mp3" type="audio/mpeg">
     </audio>
 
     <script>
@@ -188,28 +197,30 @@
             const meses = Math.floor(diasTotais / 30);
             const dias = diasTotais % 30;
 
+            // Linha principal (meses, dias, horas...)
             document.getElementById("tempo").innerHTML =
-                `<span class="unidade">${meses} meses</span>, ` +
-                `<span class="unidade">${dias} dias</span>, ` +
-                `<span class="unidade">${horas} horas</span>, ` +
-                `<span class="unidade">${minutos} minutos</span> e ` +
-                `<span class="unidade">${segundos} segundos</span>`;
+                `<span class="unidade">${meses}</span> meses, ` +
+                `<span class="unidade">${dias}</span> dias, ` +
+                `<span class="unidade">${horas}</span> horas, ` +
+                `<span class="unidade">${minutos}</span> minutos e ` +
+                `<span class="unidade">${segundos}</span> segundos`;
 
+            // Resumo com "ou ..."
             const totalHoras = diasTotais * 24 + horas;
             const totalMinutos = totalHoras * 60 + minutos;
             const totalSegundosTotal = totalMinutos * 60 + segundos;
 
             document.getElementById("resumo").innerHTML =
-                `<span class="unidade">${diasTotais} dias</span>, ` +
-                `<span class="unidade">${totalHoras} horas</span>, ` +
-                `<span class="unidade">${totalMinutos} minutos</span> e ` +
-                `<span class="unidade">${totalSegundosTotal} segundos</span>`;
+                `ou <span class="unidade">${diasTotais}</span> dias, ` +
+                `<span class="unidade">${totalHoras}</span> horas, ` +
+                `<span class="unidade">${totalMinutos}</span> minutos e ` +
+                `<span class="unidade">${totalSegundosTotal}</span> segundos 💕`;
         }
 
         setInterval(atualizarContador, 1000);
         atualizarContador();
 
-        // Corações flutuantes
+        // Corações animados
         function criarCoracao() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
